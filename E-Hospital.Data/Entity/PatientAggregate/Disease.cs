@@ -4,7 +4,7 @@ using System.Text;
 
 namespace E_Hospital.Data.Entity
 {
-    class Disease
+    public class Disease
     {
         public int Id { get; set; }
         public virtual MedHistory MedHistory { get; set; }

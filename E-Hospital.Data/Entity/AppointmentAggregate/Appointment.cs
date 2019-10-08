@@ -4,10 +4,11 @@ using System.Text;
 
 namespace E_Hospital.Data.Entity
 {
-    class MedHistory
+    public class Appointment
     {
         public int Id { get; set; }
+        public virtual Doctor Doctor { get; set; }
         public virtual Patient Patient { get; set; }
-        public virtual List<Disease> Diseases { get; set; }
+        public DateTime AppointmentDate { get; set; }
     }
 }
