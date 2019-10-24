@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace E_Hospital.EF
 {
@@ -18,6 +19,23 @@ namespace E_Hospital.EF
         public E_HospitalContext() : base("E-HospitalContext")
         {
 
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Patient>().HasRequired(p => p.MedHistory).WithRequiredPrincipal(m => m.Patient);
+
+            modelBuilder.Entity<MedHistory>().HasMany(m => m.Diseases).WithRequired(d => d.MedHistory);
+
+            modelBuilder.Entity<Disease>().HasRequired(d=>d.Doctor);
+
+            modelBuilder.Entity<Hospital>();
+
+            modelBuilder.Entity<Doctor>();
+
+            modelBuilder.Entity<Appointment>();
         }
     }
 }

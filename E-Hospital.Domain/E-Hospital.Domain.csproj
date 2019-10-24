@@ -41,7 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IAppointmentService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppointmentService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\E-Hospital.Data\E-Hospital.Data.csproj">
+      <Project>{03ab3293-c96b-4d94-9908-4a5fce62dc38}</Project>
+      <Name>E-Hospital.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\E-Hospital.EF\E-Hospital.EF.csproj">
+      <Project>{65b24ce3-5307-46a9-9b91-d2f1dcd41703}</Project>
+      <Name>E-Hospital.EF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

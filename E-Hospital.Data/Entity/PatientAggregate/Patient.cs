@@ -10,5 +10,9 @@ namespace E_Hospital.Data.Entity
         public string Name { get; set; }
         public string Surname { get; set; }
         public DateTime Birthday{ get; set; }
+
+        public int MedHistoryId { get; set; }
+        public  MedHistory MedHistory { get; set; }
+
     }
 }

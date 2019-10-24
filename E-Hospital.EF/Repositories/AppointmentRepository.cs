@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.EF.Repositories
 {
-    class AppointmentRepository : IAppointmentRepository
+    public class AppointmentRepository : IAppointmentRepository
     {
         public void Create(Appointment appointment)
         {
@@ -28,11 +28,14 @@ namespace E_Hospital.EF.Repositories
             }
         }
 
-        public Appointment Get(int id)
+        public Appointment GetAppointmentDetails(int id)
         {
             using (var context = new E_HospitalContext())
             {
-                return context.Appointments.FirstOrDefault(a => a.Id == id);
+                return context.Appointments
+                    .Include("Doctor")
+                    .Include("Patient")
+                    .FirstOrDefault(a => a.Id == id);
             }
         }
 

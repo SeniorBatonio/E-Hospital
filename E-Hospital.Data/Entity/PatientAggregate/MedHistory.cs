@@ -7,7 +7,10 @@ namespace E_Hospital.Data.Entity
     public class MedHistory
     {
         public int Id { get; set; }
-        public virtual Patient Patient { get; set; }
-        public virtual List<Disease> Diseases { get; set; }
+
+        public int PatientId { get; set; }
+        public Patient Patient { get; set; }
+
+        public List<Disease> Diseases { get; set; }
     }
 }

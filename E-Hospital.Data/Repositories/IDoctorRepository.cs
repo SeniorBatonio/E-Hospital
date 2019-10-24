@@ -12,7 +12,7 @@ namespace E_Hospital.Data.Repositories
         void Create(Doctor doctor);
         void Update(Doctor doctor);
         void Delete(Doctor doctor);
-        Doctor Get(int id);
+        Doctor GetDoctorDetails(int id);
         List<Doctor> GetDoctors();
     }
 }

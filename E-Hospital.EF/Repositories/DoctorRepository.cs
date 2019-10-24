@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.EF.Repositories
 {
-    class DoctorRepository : IDoctorRepository
+    public class DoctorRepository : IDoctorRepository
     {
         public void Create(Doctor doctor)
         {
@@ -28,11 +28,14 @@ namespace E_Hospital.EF.Repositories
             }
         }
 
-        public Doctor Get(int id)
+        public Doctor GetDoctorDetails(int id)
         {
             using (var context = new E_HospitalContext())
             {
-                return context.Doctors.FirstOrDefault(d => d.Id == id);
+                var d1 = context.Doctors.ToList();
+                return context.Doctors
+                    .Include("Hospital")
+                    .FirstOrDefault(d => d.Id == id);
             }
         }
 
