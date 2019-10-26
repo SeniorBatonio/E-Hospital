@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\AppointmentAggregate\Appointment.cs" />
-    <Compile Include="Entity\DoctorAggregate\DoctorAppointmentDateTime.cs" />
+    <Compile Include="Entity\DoctorAggregate\DoctorAppointmentTime.cs" />
+    <Compile Include="Entity\DoctorAggregate\Schedule.cs" />
     <Compile Include="Entity\PatientAggregate\Disease.cs" />
     <Compile Include="Entity\DoctorAggregate\Doctor.cs" />
     <Compile Include="Entity\HospitalAggregate\Hospital.cs" />

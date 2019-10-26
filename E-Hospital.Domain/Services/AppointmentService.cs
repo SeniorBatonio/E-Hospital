@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Services
 {
-    class AppointmentService : IAppointmentService
+    public class AppointmentService : IAppointmentService
     {
         private IAppointmentRepository _appointmentRepo;
         public AppointmentService(IAppointmentRepository appointmentRepo)

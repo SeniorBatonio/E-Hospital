@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Services
 {
-    class ReservationService : IReservationService
+    public class ReservationService : IReservationService
     {
         private IReservationRepository _reservationRepo;
 
@@ -17,7 +17,7 @@ namespace E_Hospital.Domain.Services
         {
             _reservationRepo = reservationRepo;
         }
-        public bool DateTimeIsReserved(DoctorAppointmentDateTime dateTime)
+        public bool DateTimeIsReserved(DoctorAppointmentTime dateTime)
         {
             var reservationsForCurTime = _reservationRepo.GetReservations().FindAll(r => r.DoctorAppointmentDateTimeId == dateTime.Id);
             if(reservationsForCurTime != null)
@@ -44,11 +44,11 @@ namespace E_Hospital.Domain.Services
             _reservationRepo.Delete(reservation);
         }
 
-        public Reservation Reserve(DoctorAppointmentDateTime dateTime)
+        public Reservation Reserve(DoctorAppointmentTime dateTime)
         {
             if (DateTimeIsReserved(dateTime))
             {
-                throw new InvalidOperationException($"{dateTime.Doctor.Name} {dateTime.Doctor.Surname} appointment on {dateTime.AppointmentDateTime} is reserved.");
+                throw new InvalidOperationException($"{dateTime.Schedule.Doctor.Name} {dateTime.Schedule.Doctor.Surname} appointment on {dateTime.AppointmentTime} is reserved.");
             }
             var newReservation = new Reservation
             {

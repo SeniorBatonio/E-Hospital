@@ -30,7 +30,9 @@ namespace E_Hospital.EF
 
             modelBuilder.Entity<MedHistory>().HasMany(m => m.Diseases).WithRequired(d => d.MedHistory);
 
-            modelBuilder.Entity<Doctor>().HasMany(d => d.DateTimes).WithRequired(dt => dt.Doctor);
+            modelBuilder.Entity<Doctor>().HasMany(d => d.Schedules).WithRequired(s => s.Doctor);
+
+            modelBuilder.Entity<Schedule>().HasMany(s => s.DoctorAppointmentTimes).WithRequired(t => t.Schedule);
 
             modelBuilder.Entity<Disease>();
 
