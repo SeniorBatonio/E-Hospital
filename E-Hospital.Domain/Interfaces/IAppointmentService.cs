@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Interfaces
 {
-    interface IAppointmentService
+    public interface IReservationService
     {
-        void Appoint(Appointment appointment);
-        void RemoveAppointment(Appointment appointment);
-        bool IsReserved(Appointment appointment);
+        Reservation Reserve(DoctorAppointmentDateTime dateTime);
+        void RemoveReservation(Reservation appointment);
+        bool DateTimeIsReserved(DoctorAppointmentDateTime dateTime);
     }
 }

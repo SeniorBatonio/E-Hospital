@@ -10,7 +10,9 @@ namespace E_Hospital.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var c = new E_Hospital.EF.Repositories.DoctorRepository();
+            var d = c.GetDoctorDetails(1);
+            return View(d);
         }
 
         public ActionResult About()

@@ -2,6 +2,7 @@
 {
     using E_Hospital.Data.Entity;
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -20,7 +21,10 @@
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
 
-
+            context.Hospitals.AddOrUpdate(
+                h => h.Id,
+                new Hospital { Id = 1, Location = "Kiev", Number = 5 },
+                new Hospital { Id = 2, Location = "Cherkasy", Number = 3 });
 
             context.Doctors.AddOrUpdate(
                 d => d.Id,
@@ -29,15 +33,15 @@
                     Name = "Luba",
                     Surname = "Kostenko",
                     Profession = "Therapist",
-                    Hospital = new Hospital { Location = "Kiev", Number = 5 },
+                    HospitalID = 1
                 },
                 new Doctor
                 {
                     Name = "Oksana",
                     Surname = "Petrenko",
                     Profession = "Therapist",
-                    Hospital = new Hospital { Location = "Cherkasy", Number = 3 },
-                });
+                    HospitalID = 2
+                }) ;
 
         }
     }

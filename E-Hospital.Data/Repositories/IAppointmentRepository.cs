@@ -13,6 +13,6 @@ namespace E_Hospital.Data.Repositories
         void Update(Appointment appointment);
         void Delete(Appointment appointment);
         Appointment GetAppointmentDetails(int id);
-        
+        List<Appointment> GetAppointments();
     }
 }

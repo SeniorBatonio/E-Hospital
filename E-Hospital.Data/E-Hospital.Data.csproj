@@ -42,16 +42,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entity\AppointmentAggregate\Appointment.cs" />
+    <Compile Include="Entity\DoctorAggregate\DoctorAppointmentDateTime.cs" />
     <Compile Include="Entity\PatientAggregate\Disease.cs" />
     <Compile Include="Entity\DoctorAggregate\Doctor.cs" />
     <Compile Include="Entity\HospitalAggregate\Hospital.cs" />
     <Compile Include="Entity\PatientAggregate\MedHistory.cs" />
     <Compile Include="Entity\PatientAggregate\Patient.cs" />
+    <Compile Include="Entity\ReservationAggregate\Reservation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IAppointmentRepository.cs" />
     <Compile Include="Repositories\IDoctorRepository.cs" />
     <Compile Include="Repositories\IHospitalRepository.cs" />
     <Compile Include="Repositories\IPatientRepository.cs" />
+    <Compile Include="Repositories\IReservationRepository.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

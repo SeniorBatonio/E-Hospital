@@ -39,6 +39,14 @@ namespace E_Hospital.EF.Repositories
             }
         }
 
+        public List<Appointment> GetAppointments()
+        {
+            using (var context = new E_HospitalContext())
+            {
+                return context.Appointments.ToList();
+            }
+        }
+
         public void Update(Appointment appointment)
         {
             using (var context = new E_HospitalContext())

@@ -10,8 +10,7 @@ namespace E_Hospital.Data.Entity
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Profession { get; set; }
-
+        public List<DoctorAppointmentDateTime> DateTimes{ get; set; }
         public int HospitalID { get; set; }
-        public Hospital Hospital { get; set; }
     }
 }

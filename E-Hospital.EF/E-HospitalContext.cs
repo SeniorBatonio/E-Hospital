@@ -15,6 +15,7 @@ namespace E_Hospital.EF
         public DbSet<Disease> Diseases { get; set; }
         public DbSet<MedHistory> MedHistories { get; set; }
         public DbSet<Patient> Patients { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
 
         public E_HospitalContext() : base("E-HospitalContext")
         {
@@ -29,13 +30,15 @@ namespace E_Hospital.EF
 
             modelBuilder.Entity<MedHistory>().HasMany(m => m.Diseases).WithRequired(d => d.MedHistory);
 
-            modelBuilder.Entity<Disease>().HasRequired(d=>d.Doctor);
+            modelBuilder.Entity<Doctor>().HasMany(d => d.DateTimes).WithRequired(dt => dt.Doctor);
+
+            modelBuilder.Entity<Disease>();
 
             modelBuilder.Entity<Hospital>();
 
             modelBuilder.Entity<Doctor>();
 
-            modelBuilder.Entity<Appointment>();
+            modelBuilder.Entity<Reservation>();
         }
     }
 }
