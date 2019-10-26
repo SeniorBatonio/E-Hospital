@@ -12,21 +12,31 @@ namespace E_Hospital.Domain.Services
     class ReservationService : IReservationService
     {
         private IReservationRepository _reservationRepo;
-        private IAppointmentRepository _appointmentRepo;
 
-        public ReservationService(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo)
+        public ReservationService(IReservationRepository reservationRepo)
         {
             _reservationRepo = reservationRepo;
-            _appointmentRepo = appointmentRepo;
         }
         public bool DateTimeIsReserved(DoctorAppointmentDateTime dateTime)
         {
-            var res = _reservationRepo.GetReservations().FirstOrDefault(r => r.DoctorAppointmentDateTimeId == dateTime.Id);
-            if (res != null && (res.End > DateTime.Now || _appointmentRepo.GetAppointments().Any(a=>a.ReservationId == res.Id)))
+            var reservationsForCurTime = _reservationRepo.GetReservations().FindAll(r => r.DoctorAppointmentDateTimeId == dateTime.Id);
+            if(reservationsForCurTime != null)
             {
-                return true;
+                return false;
+            }
+            foreach (var res in reservationsForCurTime)
+            {
+                if (IsActive(res))
+                {
+                    return true;
+                }
             }
             return false;
+        }
+
+        public bool IsActive(Reservation reservation)
+        {
+            return reservation.End > DateTime.Now || reservation.AppointmentId.HasValue;
         }
 
         public void RemoveReservation(Reservation reservation)

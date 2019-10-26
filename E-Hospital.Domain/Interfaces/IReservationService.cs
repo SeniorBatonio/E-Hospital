@@ -12,5 +12,6 @@ namespace E_Hospital.Domain.Interfaces
         Reservation Reserve(DoctorAppointmentDateTime dateTime);
         void RemoveReservation(Reservation appointment);
         bool DateTimeIsReserved(DoctorAppointmentDateTime dateTime);
+        bool IsActive(Reservation reservation);
     }
 }
