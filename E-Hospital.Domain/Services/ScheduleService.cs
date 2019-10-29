@@ -49,7 +49,7 @@ namespace E_Hospital.Domain.Services
             _doctorRepo.Update(doc);
         }
 
-        public List<DoctorAppointmentTime> GetFreeTime(Schedule schedule)
+        public List<DoctorAppointmentTime> GetFreeTimes(Schedule schedule)
         {
             var freeTimes = new List<DoctorAppointmentTime>();
             foreach(var time in schedule.DoctorAppointmentTimes)
