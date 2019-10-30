@@ -1,0 +1,15 @@
+﻿@model E_Hospital.Models.ReservationViewModel
+
+<h3>
+    The appointment time to the Doctor @Model.Doctor.Name @Model.Doctor.Surname at @Model.ReservationTime.AppointmentTime.ToShortTimeString()
+    @Model.ReservationDate.ToShortDateString() was reserved for you
+</h3>
+
+<h2>Enter your email:</h2>
+@using (Html.BeginForm("Reserve", "Reservation", FormMethod.Post))
+{
+    @Html.Hidden("reservationId", Model.Reservation.Id.ToString())
+    @Html.Label("Email:")
+    @Html.TextBox("email")
+    <input type="submit" value="Send" />
+}

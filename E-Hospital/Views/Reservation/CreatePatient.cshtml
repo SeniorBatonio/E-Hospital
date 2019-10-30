@@ -1,0 +1,22 @@
+﻿@model E_Hospital.Models.CreatePatientViewModel
+
+<h3>Register new patient @Model.Email</h3>
+
+@using (Html.BeginForm("CreatePatient", "Reservation", FormMethod.Post))
+{
+    @Html.Hidden("Email", Model.Email)
+    @Html.Hidden("reservationId", Model.ReservationId.ToString())
+    <div>
+        @Html.Label("Name")
+        @Html.TextBox("Name")
+    </div>
+    <div>
+        @Html.Label("Surname")
+        @Html.TextBox("Surname")
+    </div>
+    <div>
+        @Html.Label("Birthday")
+        <input type="date" name="Birthday" />
+    </div>
+    <input type="submit" />
+}

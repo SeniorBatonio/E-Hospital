@@ -17,10 +17,10 @@ namespace E_Hospital.Domain.Services
         {
             _reservationRepo = reservationRepo;
         }
-        public bool DateTimeIsReserved(DoctorAppointmentTime dateTime)
+        public bool DateTimeIsReserved(DoctorAppointmentTime time)
         {
-            var reservationsForCurTime = _reservationRepo.GetReservations().FindAll(r => r.DoctorAppointmentDateTimeId == dateTime.Id);
-            if(reservationsForCurTime != null)
+            var reservationsForCurTime = _reservationRepo.GetReservations().FindAll(r => r.DoctorAppointmentDateTimeId == time.Id);
+            if(reservationsForCurTime.Count == 0)
             {
                 return false;
             }
@@ -44,19 +44,19 @@ namespace E_Hospital.Domain.Services
             _reservationRepo.Delete(reservation);
         }
 
-        public Reservation Reserve(DoctorAppointmentTime dateTime)
+        public Reservation Reserve(DoctorAppointmentTime time)
         {
-            if (DateTimeIsReserved(dateTime))
+            if (DateTimeIsReserved(time))
             {
-                throw new InvalidOperationException($"{dateTime.Schedule.Doctor.Name} {dateTime.Schedule.Doctor.Surname} appointment on {dateTime.AppointmentTime} is reserved.");
+                throw new InvalidOperationException($"{time.Schedule.Doctor.Name} {time.Schedule.Doctor.Surname} appointment on {time.AppointmentTime} is reserved.");
             }
             var newReservation = new Reservation
             {
                 Start = DateTime.Now,
                 End = DateTime.Now.AddMinutes(20),
-                DoctorAppointmentDateTimeId = dateTime.Id
+                DoctorAppointmentDateTimeId = time.Id
             };
-
+            _reservationRepo.Create(newReservation);
             return newReservation;
         }
     }

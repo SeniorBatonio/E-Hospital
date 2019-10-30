@@ -32,11 +32,7 @@ namespace E_Hospital.EF.Repositories
         {
             using (var context = new E_HospitalContext())
             {
-                return context.Patients
-                    .Include("MedHistory")
-                    .Include("MedHistory.Diseases")
-                    .Include("MedHistory.Diseases.Doctor")
-                    .FirstOrDefault(p => p.Id == id);
+                return context.Patients.FirstOrDefault(p => p.Id == id);
             }
         }
 

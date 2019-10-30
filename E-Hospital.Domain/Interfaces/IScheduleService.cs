@@ -12,6 +12,7 @@ namespace E_Hospital.Domain.Interfaces
         Schedule Create(DateTime date, Doctor doctor);
         List<DoctorAppointmentTime> GetFreeTimes(Schedule schedule);
         List<DoctorAppointmentTime> GetTimesForNewSchedule(DateTime date);
+        List<DateTime> GetAvailableDatesForNewSchedule(Doctor doctor, DateTime startDate, DateTime endDate);
         void Delete(Schedule schedule);
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Interfaces
 {
-    interface IPatientService
+    public interface IPatientService
     {
         bool IsPatientExist(string email);
         Patient CreatePatient(string email, string name, string surname, DateTime birthday);

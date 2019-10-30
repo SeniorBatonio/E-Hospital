@@ -12,19 +12,23 @@ namespace E_Hospital.Domain.Services
     public class AppointmentService : IAppointmentService
     {
         private IAppointmentRepository _appointmentRepo;
-        public AppointmentService(IAppointmentRepository appointmentRepo)
+        private IReservationRepository _reservationRepo;
+        public AppointmentService(IAppointmentRepository appointmentRepo, IReservationRepository reservationRepo)
         {
             _appointmentRepo = appointmentRepo;
+            _reservationRepo = reservationRepo;
         }
         public Appointment Create(int reservationId, int patientId)
         {
-
+            var reservation = _reservationRepo.Get(reservationId);
             var newAppointment = new Appointment
             {
                 ReservationId = reservationId,
                 PatientId = patientId
             };
             _appointmentRepo.Create(newAppointment);
+            reservation.AppointmentId = newAppointment.Id;
+            _reservationRepo.Update(reservation);
             return newAppointment;
         }
 

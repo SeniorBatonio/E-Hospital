@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Interfaces
 {
-    interface IAppointmentService
+    public interface IAppointmentService
     {
         Appointment Create(int reservationId, int patientId);
         void Remove(Appointment appointment);

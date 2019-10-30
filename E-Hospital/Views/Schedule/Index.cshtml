@@ -1,0 +1,22 @@
+﻿@model E_Hospital.Models.CreateScheduleViewModel
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>@Model.Doctor.Name @Model.Doctor.Surname</h2>
+
+<h3>Already created schedules</h3>
+@foreach (var schedule in Model.Schedules)
+{
+    <div>
+        @Html.ActionLink($"Schedule at {schedule.Date.ToShortDateString()}", "ScheduleDetails", new { scheduleId = schedule.Id })
+    </div>
+}
+<h3>Create new schedule</h3>
+@foreach (var date in Model.AvailableDates)
+{
+    <div>
+        @Html.ActionLink($"Schedule at {date.ToShortDateString()}", "CreateSchedule", new { doctorId = Model.Doctor.Id, date = date })
+    </div>
+}
+

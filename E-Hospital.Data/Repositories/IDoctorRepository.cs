@@ -14,5 +14,9 @@ namespace E_Hospital.Data.Repositories
         void Delete(Doctor doctor);
         Doctor GetDoctorDetails(int id);
         List<Doctor> GetDoctors();
+        void AddSchedule(Schedule schedule);
+        List<Schedule> GetSchedules(int doctorId, DateTime startDate, DateTime endDate);
+        Schedule GetSchedule(int id);
+        DoctorAppointmentTime GetTime(int timeId);
     }
 }

@@ -1,0 +1,18 @@
+﻿@model E_Hospital.Models.ScheduleDetailsViewModel
+
+<h2>@Model.Doctor.Name @Model.Doctor.Surname schedule at @Model.Schedule.Date.ToShortDateString()</h2>
+
+@foreach(var time in Model.Schedule.DoctorAppointmentTimes)
+{
+    if(Model.FreeTimesIds.Contains(time.Id))
+    {
+        <div>
+            @Html.ActionLink($"{time.AppointmentTime.ToShortTimeString()}"
+           ,"Index", "Reservation",  new { timeId = time.Id }, null)
+        </div>
+    }
+    else
+    {
+        <div>@time.AppointmentTime.ToShortTimeString()</div>
+    }
+}

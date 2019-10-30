@@ -1,0 +1,8 @@
+﻿@model E_Hospital.Models.AppointmentDetailsViewModel
+
+<h3>Your appointment was reserved</h3>
+
+<h2><b>Doctor:</b> @Model.Doctor.Name @Model.Doctor.Surname (@Model.Doctor.Profession)</h2>
+<h2><b>Patient:</b> @Model.Patient.Name @Model.Patient.Surname (@Model.Patient.Email)</h2>
+<h2><b>Date:</b> @Model.Date.ToShortDateString()</h2>
+<h2><b>Time:</b> @Model.Time.ToShortTimeString()</h2>

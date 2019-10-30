@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Services
 {
-    class PatientService : IPatientService
+    public class PatientService : IPatientService
     {
         private IPatientRepository _patientRepo;
         public PatientService(IPatientRepository patientRepo)
@@ -24,7 +24,6 @@ namespace E_Hospital.Domain.Services
                 Name = name,
                 Surname = surname,
                 Birthday = birthday,
-                MedHistory = new MedHistory()
             };
             _patientRepo.Create(newPatient);
             return newPatient;

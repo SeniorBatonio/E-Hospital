@@ -11,7 +11,6 @@ namespace E_Hospital.Data.Entity
         public string Surname { get; set; }
         public DateTime Birthday{ get; set; }
         public string Email { get; set; }
-        public virtual MedHistory MedHistory { get; set; }
 
     }
 }

@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Domain.Services
 {
-    class ScheduleService : IScheduleService
+    public class ScheduleService : IScheduleService
     {
         private IDoctorRepository _doctorRepo;
         private IReservationService _reservationService;
-        public ScheduleService(IDoctorRepository doctorRepo)
+        public ScheduleService(IDoctorRepository doctorRepo, IReservationService reservationService)
         {
             _doctorRepo = doctorRepo;
+            _reservationService = reservationService;
         }
         public Schedule Create(DateTime date, Doctor doctor)
         {
@@ -25,9 +26,9 @@ namespace E_Hospital.Domain.Services
                 Doctor = doctor,
                 DoctorAppointmentTimes = GetTimesForNewSchedule(date)
             };
+            _doctorRepo.AddSchedule(newSchedule);
             doctor.Schedules.Add(newSchedule);
             _doctorRepo.Update(doctor);
-
             return newSchedule;
         }
 
@@ -60,6 +61,20 @@ namespace E_Hospital.Domain.Services
                 }
             }
             return freeTimes;
+        }
+
+        public List<DateTime> GetAvailableDatesForNewSchedule(Doctor doctor, DateTime startDate, DateTime endDate)
+        {
+            var avDates = new List<DateTime>();
+            var reservedDates = doctor.Schedules.Select(s => s.Date);
+            for(var date = startDate; date < endDate; date = date.AddDays(1))
+            {
+                if(!reservedDates.Any(d=>d.Date == date))
+                {
+                    avDates.Add(date);
+                }
+            }
+            return avDates;
         }
     }
 }

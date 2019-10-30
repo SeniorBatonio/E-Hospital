@@ -1,0 +1,18 @@
+﻿@model E_Hospital.Models.HospitalsPageViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Select hospital</h2>
+@foreach(var location in Model.Locations)
+{
+    <h3>Hospitals in @location</h3>
+    foreach (var hospital in Model.Hospitals.Where(h=>h.Location == location))
+    {
+        <div>
+            @Html.ActionLink($"{hospital.Location} Hospital #{hospital.Number}", "Doctors", new { hospitalId = hospital.Id })
+        </div>
+    }
+}
+

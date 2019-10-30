@@ -1,0 +1,17 @@
+﻿@model E_Hospital.Models.DoctorsViewModel
+@{
+    ViewBag.Title = "Doctors";
+}
+
+<h2>Doctors in hospital #@Model.Hospital.Number in @Model.Hospital.Location</h2>
+@foreach(var doctor in Model.Doctors)
+{
+    <div>
+        @Html.ActionLink($"{doctor.Name} {doctor.Surname}", "Index", "Schedule", new { doctorId = doctor.Id}, null)
+    </div>
+    <div>
+        Professsion: @doctor.Profession
+    </div>
+    <br />
+}
+

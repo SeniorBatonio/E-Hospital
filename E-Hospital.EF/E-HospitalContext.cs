@@ -12,10 +12,10 @@ namespace E_Hospital.EF
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-        public DbSet<Disease> Diseases { get; set; }
-        public DbSet<MedHistory> MedHistories { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<DoctorAppointmentTime> DoctorAppointmentTimes{ get; set; }
 
         public E_HospitalContext() : base("E-HospitalContext")
         {
@@ -26,15 +26,11 @@ namespace E_Hospital.EF
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Patient>().HasRequired(p => p.MedHistory).WithRequiredPrincipal(m => m.Patient);
-
-            modelBuilder.Entity<MedHistory>().HasMany(m => m.Diseases).WithRequired(d => d.MedHistory);
-
             modelBuilder.Entity<Doctor>().HasMany(d => d.Schedules).WithRequired(s => s.Doctor);
 
             modelBuilder.Entity<Schedule>().HasMany(s => s.DoctorAppointmentTimes).WithRequired(t => t.Schedule);
 
-            modelBuilder.Entity<Disease>();
+            modelBuilder.Entity<Patient>();
 
             modelBuilder.Entity<Hospital>();
 
