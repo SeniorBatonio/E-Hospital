@@ -10,9 +10,11 @@ namespace E_Hospital.Domain.Interfaces
     public interface IScheduleService
     {
         Schedule Create(DateTime date, Doctor doctor);
-        List<DoctorAppointmentTime> GetFreeTimes(Schedule schedule);
-        List<DoctorAppointmentTime> GetTimesForNewSchedule(DateTime date);
+        List<AppointmentTime> GetFreeTimes(Schedule schedule);
+        List<AppointmentTime> GetReservedTimes(Schedule schedule);
+        List<AppointmentTime> GetTimesForNewSchedule(DateTime date);
         List<DateTime> GetAvailableDatesForNewSchedule(Doctor doctor, DateTime startDate, DateTime endDate);
         void Delete(Schedule schedule);
+        string FormatTime(int timeid);
     }
 }

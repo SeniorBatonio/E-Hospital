@@ -18,9 +18,11 @@ namespace E_Hospital.Controllers
         private IPatientRepository _patientRepo;
         private IReservationRepository _reservationRepo;
         private IAppointmentService _appointmentService;
+        private IScheduleRepository _scheduleRepo;
+        private IScheduleService _scheduleService;
         public ReservationController(IDoctorRepository doctorRepo, IReservationService reservationService,
             IPatientService patientService, IPatientRepository patientRepo, IReservationRepository reservationRepo,
-            IAppointmentService appointmentService)
+            IAppointmentService appointmentService, IScheduleRepository scheduleRepo, IScheduleService scheduleService)
         {
             _doctorRepo = doctorRepo;
             _reservationService = reservationService;
@@ -28,18 +30,20 @@ namespace E_Hospital.Controllers
             _patientRepo = patientRepo;
             _reservationRepo = reservationRepo;
             _appointmentService = appointmentService;
+            _scheduleRepo = scheduleRepo;
+            _scheduleService = scheduleService;
         }
         public ActionResult Index(int timeId)
         {
-            var time = _doctorRepo.GetTime(timeId);
+            var time = _scheduleRepo.GetTime(timeId);
             var schedule = time.Schedule;
             var reservation = _reservationService.Reserve(time);
             var model = new ReservationViewModel
             {
                 Reservation = reservation,
                 ReservationDate = schedule.Date,
-                ReservationTime = time,
-                Doctor = schedule.Doctor
+                ReservationTime =  _scheduleService.FormatTime(timeId),
+                Doctor = _doctorRepo.GetDoctorDetails(schedule.DoctorId)
             };
             return View(model);
         }
@@ -78,13 +82,13 @@ namespace E_Hospital.Controllers
 
             var patient = _patientRepo.Get(patientId);
             var reservation = _reservationRepo.Get(reservationId);
-            var time = _doctorRepo.GetTime(reservation.DoctorAppointmentDateTimeId);
+            var time = _scheduleRepo.GetTime(reservation.DoctorAppointmentDateTimeId);
             var model = new AppointmentDetailsViewModel
             {
-                Doctor = time.Schedule.Doctor,
+                Doctor = _doctorRepo.GetDoctorDetails(time.Schedule.DoctorId),
                 Patient = patient,
                 Date = time.Schedule.Date,
-                Time = time.AppointmentTime
+                Time = _scheduleService.FormatTime(time.Id)
             };
             return View(model);
         }

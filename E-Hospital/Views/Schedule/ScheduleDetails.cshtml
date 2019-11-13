@@ -2,17 +2,17 @@
 
 <h2>@Model.Doctor.Name @Model.Doctor.Surname schedule at @Model.Schedule.Date.ToShortDateString()</h2>
 
-@foreach(var time in Model.Schedule.DoctorAppointmentTimes)
+@foreach(var time in Model.Schedule.AppointmentTimes)
 {
-    if(Model.FreeTimesIds.Contains(time.Id))
+    if(Model.FreeTimes.Any(t=>t.Key == time.Id))
     {
         <div>
-            @Html.ActionLink($"{time.AppointmentTime.ToShortTimeString()}"
+            @Html.ActionLink($"{Model.FreeTimes[time.Id]}"
            ,"Index", "Reservation",  new { timeId = time.Id }, null)
         </div>
     }
     else
     {
-        <div>@time.AppointmentTime.ToShortTimeString()</div>
+        <div>@Model.ReservedTimes[time.Id]</div>
     }
 }

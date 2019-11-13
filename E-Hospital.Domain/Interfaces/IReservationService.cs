@@ -9,9 +9,9 @@ namespace E_Hospital.Domain.Interfaces
 {
     public interface IReservationService
     {
-        Reservation Reserve(DoctorAppointmentTime time);
+        Reservation Reserve(AppointmentTime time);
         void RemoveReservation(Reservation appointment);
-        bool DateTimeIsReserved(DoctorAppointmentTime time);
+        bool DateTimeIsReserved(AppointmentTime time);
         bool IsActive(Reservation reservation);
     }
 }

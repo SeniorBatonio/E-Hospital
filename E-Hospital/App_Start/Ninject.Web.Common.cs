@@ -69,7 +69,7 @@ namespace E_Hospital.App_Start
             kernel.Bind<IHospitalRepository>().To<HospitalRepository>();
             kernel.Bind<IPatientRepository>().To<PatientRepository>();
             kernel.Bind<IReservationRepository>().To<ReservationRepository>();
-
+            kernel.Bind<IScheduleRepository>().To<ScheduleRepository>();
 
             kernel.Bind<IAppointmentService>().To<AppointmentService>();
             kernel.Bind<IPatientService>().To<PatientService>();

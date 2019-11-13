@@ -11,33 +11,36 @@ namespace E_Hospital.Domain.Services
 {
     public class ScheduleService : IScheduleService
     {
+        private IScheduleRepository _scheduleRepo;
         private IDoctorRepository _doctorRepo;
         private IReservationService _reservationService;
-        public ScheduleService(IDoctorRepository doctorRepo, IReservationService reservationService)
+        public ScheduleService(IScheduleRepository scheduleRepo, IReservationService reservationService, IDoctorRepository doctorRepo)
         {
-            _doctorRepo = doctorRepo;
+            _scheduleRepo = scheduleRepo;
             _reservationService = reservationService;
+            _doctorRepo = doctorRepo;
         }
         public Schedule Create(DateTime date, Doctor doctor)
         {
+            if (doctor.SchedulesIds == null) doctor.SchedulesIds = new List<int>();
             var newSchedule = new Schedule
             {
                 Date = date,
-                Doctor = doctor,
-                DoctorAppointmentTimes = GetTimesForNewSchedule(date)
+                DoctorId = doctor.Id,
+                AppointmentTimes = GetTimesForNewSchedule(date)
             };
-            _doctorRepo.AddSchedule(newSchedule);
-            doctor.Schedules.Add(newSchedule);
+            _scheduleRepo.Create(newSchedule);
+            doctor.SchedulesIds.Add(newSchedule.Id);
             _doctorRepo.Update(doctor);
             return newSchedule;
         }
 
-        public List<DoctorAppointmentTime> GetTimesForNewSchedule(DateTime date)
+        public List<AppointmentTime> GetTimesForNewSchedule(DateTime date)
         {
-            var newTimes = new List<DoctorAppointmentTime>();
-            for(var t = date.Date.AddHours(9); t.Hour <= 17; t = t.AddHours(1)) // 9:00 - start of the working day 
-            {                                                                   // 17:00 - end of working day
-                var time = new DoctorAppointmentTime { AppointmentTime = t };
+            var newTimes = new List<AppointmentTime>();
+            for(var hour = 9; hour <= 17; ++hour) // 9:00 - start of the working day 
+            {                                     // 17:00 - end of working day
+                var time = new AppointmentTime { Time = new VisitTime { Hour =  hour, Minute = 0} };
                 newTimes.Add(time);
             }
             return newTimes;
@@ -45,15 +48,15 @@ namespace E_Hospital.Domain.Services
 
         public void Delete(Schedule schedule)
         {
-            var doc = schedule.Doctor;
-            _doctorRepo.GetDoctorDetails(doc.Id).Schedules.Remove(schedule);
-            _doctorRepo.Update(doc);
+            var doctor = _doctorRepo.GetDoctorDetails(schedule.Id);
+            doctor.SchedulesIds.Remove(schedule.Id);
+            _doctorRepo.Update(doctor);
         }
 
-        public List<DoctorAppointmentTime> GetFreeTimes(Schedule schedule)
+        public List<AppointmentTime> GetFreeTimes(Schedule schedule)
         {
-            var freeTimes = new List<DoctorAppointmentTime>();
-            foreach(var time in schedule.DoctorAppointmentTimes)
+            var freeTimes = new List<AppointmentTime>();
+            foreach(var time in schedule.AppointmentTimes)
             {
                 if(!_reservationService.DateTimeIsReserved(time))
                 {
@@ -66,7 +69,7 @@ namespace E_Hospital.Domain.Services
         public List<DateTime> GetAvailableDatesForNewSchedule(Doctor doctor, DateTime startDate, DateTime endDate)
         {
             var avDates = new List<DateTime>();
-            var reservedDates = doctor.Schedules.Select(s => s.Date);
+            var reservedDates = _scheduleRepo.GetSchedules(doctor.Id, startDate, endDate);
             for(var date = startDate; date < endDate; date = date.AddDays(1))
             {
                 if(!reservedDates.Any(d=>d.Date == date))
@@ -75,6 +78,28 @@ namespace E_Hospital.Domain.Services
                 }
             }
             return avDates;
+        }
+
+        public string FormatTime(int timeId)
+        {
+            var time = _scheduleRepo.GetTime(timeId).Time;
+            var result = $"{time.Hour}:";
+            if (time.Minute < 10) result += $"0{time.Minute}";
+            else result += time.Minute;
+            return result;
+        }
+
+        public List<AppointmentTime> GetReservedTimes(Schedule schedule)
+        {
+            var reservedTimes = new List<AppointmentTime>();
+            foreach (var time in schedule.AppointmentTimes)
+            {
+                if (_reservationService.DateTimeIsReserved(time))
+                {
+                    reservedTimes.Add(time);
+                }
+            }
+            return reservedTimes;
         }
     }
 }

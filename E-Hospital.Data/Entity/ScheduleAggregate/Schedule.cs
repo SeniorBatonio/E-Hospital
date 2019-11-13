@@ -9,8 +9,8 @@ namespace E_Hospital.Data.Entity
     public class Schedule
     {
         public int Id { get; set; }
-        public Doctor Doctor { get; set; }
+        public int DoctorId { get; set; }
         public DateTime Date { get; set; }
-        public List<DoctorAppointmentTime> DoctorAppointmentTimes { get; set; }
+        public List<AppointmentTime> AppointmentTimes { get; set; }
     }
 }

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace E_Hospital.Data.Entity
 {
-    public class DoctorAppointmentTime
+    public class AppointmentTime
     {
         public int Id { get; set; }
-        public DateTime AppointmentTime { get; set; }
-        public virtual Schedule Schedule{ get; set; }
+        public VisitTime Time { get; set; }
+        public Schedule Schedule{ get; set; }
     }
 }

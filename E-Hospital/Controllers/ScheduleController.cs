@@ -1,4 +1,5 @@
 ﻿using E_Hospital.Data.Repositories;
+using E_Hospital.Domain;
 using E_Hospital.Domain.Interfaces;
 using E_Hospital.Models;
 using System;
@@ -13,10 +14,13 @@ namespace E_Hospital.Controllers
     {
         private IDoctorRepository _doctorRepo;
         private IScheduleService _scheduleService;
-        public ScheduleController(IDoctorRepository doctorRepo, IScheduleService scheduleService)
+        private IScheduleRepository _scheduleRepo;
+        public ScheduleController(IDoctorRepository doctorRepo, IScheduleService scheduleService,
+            IScheduleRepository scheduleRepo)
         {
             _doctorRepo = doctorRepo;
             _scheduleService = scheduleService;
+            _scheduleRepo = scheduleRepo;
         }
 
         public ActionResult Index(int doctorId)
@@ -27,7 +31,7 @@ namespace E_Hospital.Controllers
             var model = new CreateScheduleViewModel
             {
                 Doctor = doctor,
-                Schedules = doctor.Schedules,
+                Schedules = _scheduleRepo.GetSchedules(doctor.Id, startDate, endDate),
                 AvailableDates = _scheduleService.GetAvailableDatesForNewSchedule(doctor, startDate, endDate)
             };
             return View(model);
@@ -42,12 +46,17 @@ namespace E_Hospital.Controllers
 
         public ActionResult ScheduleDetails(int scheduleId)
         {
-            var schedule = _doctorRepo.GetSchedule(scheduleId);
+            var schedule = _scheduleRepo.GetSchedule(scheduleId);
             var model = new ScheduleDetailsViewModel
             {
                 Schedule = schedule,
-                FreeTimesIds = _scheduleService.GetFreeTimes(schedule).Select(s => s.Id).ToList(),
-                Doctor = schedule.Doctor
+                FreeTimes = _scheduleService.GetFreeTimes(schedule)
+                                .Select(s => s.Id)
+                                .ToDictionary(t=> t, t=>$"{_scheduleService.FormatTime(t)}"),
+                ReservedTimes = _scheduleService.GetReservedTimes(schedule)
+                                .Select(s => s.Id)
+                                .ToDictionary(t => t, t => $"{_scheduleService.FormatTime(t)}"),
+                Doctor = _doctorRepo.GetDoctorDetails(schedule.DoctorId)
             };
             return View(model);
         }

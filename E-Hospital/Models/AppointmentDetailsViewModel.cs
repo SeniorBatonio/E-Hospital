@@ -11,6 +11,6 @@ namespace E_Hospital.Models
         public Patient Patient{ get; set; }
         public Doctor Doctor{ get; set; }
         public DateTime Date{ get; set; }
-        public DateTime Time { get; set; }
+        public string Time { get; set; }
     }
 }

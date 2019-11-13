@@ -9,7 +9,8 @@ namespace E_Hospital.Models
     public class ScheduleDetailsViewModel
     {
         public Schedule Schedule{ get; set; }
-        public List<int> FreeTimesIds { get; set; }
+        public Dictionary<int, string> FreeTimes { get; set; }
+        public Dictionary<int, string> ReservedTimes { get; set; }
         public Doctor Doctor { get; set; }
     }
 }
