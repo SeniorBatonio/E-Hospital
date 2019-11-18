@@ -80,9 +80,8 @@ namespace E_Hospital.Domain.Services
             return avDates;
         }
 
-        public string FormatTime(int timeId)
+        public string FormatTime(VisitTime time)
         {
-            var time = _scheduleRepo.GetTime(timeId).Time;
             var result = $"{time.Hour}:";
             if (time.Minute < 10) result += $"0{time.Minute}";
             else result += time.Minute;

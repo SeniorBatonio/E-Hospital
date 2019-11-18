@@ -42,7 +42,7 @@ namespace E_Hospital.Controllers
             {
                 Reservation = reservation,
                 ReservationDate = schedule.Date,
-                ReservationTime =  _scheduleService.FormatTime(timeId),
+                ReservationTime =  _scheduleService.FormatTime(time.Time),
                 Doctor = _doctorRepo.GetDoctorDetails(schedule.DoctorId)
             };
             return View(model);
@@ -88,7 +88,7 @@ namespace E_Hospital.Controllers
                 Doctor = _doctorRepo.GetDoctorDetails(time.Schedule.DoctorId),
                 Patient = patient,
                 Date = time.Schedule.Date,
-                Time = _scheduleService.FormatTime(time.Id)
+                Time = _scheduleService.FormatTime(time.Time)
             };
             return View(model);
         }

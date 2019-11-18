@@ -51,11 +51,9 @@ namespace E_Hospital.Controllers
             {
                 Schedule = schedule,
                 FreeTimes = _scheduleService.GetFreeTimes(schedule)
-                                .Select(s => s.Id)
-                                .ToDictionary(t=> t, t=>$"{_scheduleService.FormatTime(t)}"),
+                                .ToDictionary(t=> t.Id, t=>$"{_scheduleService.FormatTime(t.Time)}"),
                 ReservedTimes = _scheduleService.GetReservedTimes(schedule)
-                                .Select(s => s.Id)
-                                .ToDictionary(t => t, t => $"{_scheduleService.FormatTime(t)}"),
+                                .ToDictionary(t => t.Id, t => $"{_scheduleService.FormatTime(t.Time)}"),
                 Doctor = _doctorRepo.GetDoctorDetails(schedule.DoctorId)
             };
             return View(model);

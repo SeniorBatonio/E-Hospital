@@ -15,6 +15,6 @@ namespace E_Hospital.Domain.Interfaces
         List<AppointmentTime> GetTimesForNewSchedule(DateTime date);
         List<DateTime> GetAvailableDatesForNewSchedule(Doctor doctor, DateTime startDate, DateTime endDate);
         void Delete(Schedule schedule);
-        string FormatTime(int timeid);
+        string FormatTime(VisitTime time);
     }
 }
