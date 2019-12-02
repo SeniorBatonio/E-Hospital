@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using E_Hospital.Data.Entity.DoctorAggregate;
 
 namespace E_Hospital.EF
 {
@@ -15,6 +16,7 @@ namespace E_Hospital.EF
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Shifts> Shifts{ get; set; }
         public DbSet<AppointmentTime> AppointmentTimes{ get; set; }
 
         public E_HospitalContext() : base("E-HospitalContext")
@@ -32,11 +34,9 @@ namespace E_Hospital.EF
 
             modelBuilder.Entity<Patient>();
 
-            modelBuilder.Entity<Doctor>();
+            modelBuilder.Entity<Doctor>().HasMany(d => d.Shifts).WithRequired(s => s.Doctor);
 
             modelBuilder.Entity<Hospital>();
-
-            modelBuilder.Entity<Doctor>();
 
             modelBuilder.Entity<Reservation>();
         }

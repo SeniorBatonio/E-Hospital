@@ -27,7 +27,8 @@ namespace E_Hospital.Domain.Services
             {
                 Date = date,
                 DoctorId = doctor.Id,
-                AppointmentTimes = GetTimesForNewSchedule(date)
+                AppointmentTimes = GetTimesForNewSchedule(date, doctor)
+
             };
             _scheduleRepo.Create(newSchedule);
             doctor.SchedulesIds.Add(newSchedule.Id);
@@ -35,14 +36,18 @@ namespace E_Hospital.Domain.Services
             return newSchedule;
         }
 
-        public List<AppointmentTime> GetTimesForNewSchedule(DateTime date)
+        public List<AppointmentTime> GetTimesForNewSchedule(DateTime date, Doctor doctor)
         {
             var newTimes = new List<AppointmentTime>();
-            for(var hour = 9; hour <= 17; ++hour) // 9:00 - start of the working day 
-            {                                     // 17:00 - end of working day
-                var time = new AppointmentTime { Time = new VisitTime { Hour =  hour, Minute = 0} };
-                newTimes.Add(time);
+            foreach (var shift in doctor.Shifts)
+            {
+                for (var hour = shift.StartTime.Hour; hour <= shift.EndTime.Hour; ++hour)
+                {
+                    var time = new AppointmentTime { Time = new VisitTime { Hour = hour, Minute = 0 } };
+                    newTimes.Add(time);
+                }
             }
+            
             return newTimes;
         }
 

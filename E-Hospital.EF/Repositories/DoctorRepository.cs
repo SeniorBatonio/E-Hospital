@@ -33,6 +33,7 @@ namespace E_Hospital.EF.Repositories
             using (var context = new E_HospitalContext())
             {
                 return context.Doctors
+                    .Include("Shifts")
                     .FirstOrDefault(d => d.Id == id);
             }
         }
